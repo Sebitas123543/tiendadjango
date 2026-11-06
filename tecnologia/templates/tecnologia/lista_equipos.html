@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tienda Tecnológica | SENA ADSO</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #334155;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        h1 {
+            font-size: 1.8rem;
+            color: #38bdf8;
+        }
+        .counter-pill {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+        .counter-pill strong {
+            color: #38bdf8;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+        .card:hover {
+            transform: translateY(-3px);
+            border-color: #38bdf8;
+        }
+        .card-title {
+            font-size: 1.2rem;
+            color: #f1f5f9;
+            margin-bottom: 10px;
+        }
+        .specs {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #334155;
+            padding-top: 12px;
+            margin-top: 10px;
+        }
+        .price {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #4ade80;
+        }
+        .badge {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 6px;
+            text-transform: uppercase;
+        }
+        .badge-active {
+            background-color: rgba(74, 222, 128, 0.1);
+            color: #4ade80;
+            border: 1px solid rgba(74, 222, 128, 0.2);
+        }
+        .badge-inactive {
+            background-color: rgba(248, 113, 113, 0.1);
+            color: #f87171;
+            border: 1px solid rgba(248, 113, 113, 0.2);
+        }
+        .empty-state {
+            text-align: center;
+            padding: 50px;
+            background-color: #1e293b;
+            border-radius: 12px;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚡ Catálogo Tecnológico</h1>
+            <div class="counter-pill">
+                Registros: <strong>{{ total_equipos }}</strong>
+            </div>
+        </header>
+
+        {% if equipos %}
+            <div class="grid">
+                {% for equipo in equipos %}
+                    <div class="card">
+                        <div>
+                            <h2 class="card-title">{{ equipo.equipo }}</h2>
+                            <p class="specs">{{ equipo.marca_specs }}</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="price">${{ equipo.precio_venta }}</span>
+                            {% if equipo.garantia_activa %}
+                                <span class="badge badge-active">Garantía</span>
+                            {% else %}
+                                <span class="badge badge-inactive">Sin Garantía</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <p>No se encontraron equipos registrados en la base de datos.</p>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
